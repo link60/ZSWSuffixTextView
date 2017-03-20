@@ -60,7 +60,7 @@ static NSString *const ZSWTappableLabelClassName = @"ZSWTappableLabel";
     self.containerForPlaceholder.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.containerForPlaceholder.userInteractionEnabled = NO;
     [self addSubview:self.containerForPlaceholder];
-     
+    
     // We create a width-appropriate frame because at least our width needs to be
     // correct for the first pass when we generate the head indent on the label
     CGRect widthAppropriateFrame = CGRectMake(0, 0, CGRectGetWidth(UIEdgeInsetsInsetRect(self.bounds, self.completeEdgeInsets)), 0);
@@ -237,7 +237,7 @@ static NSString *const ZSWTappableLabelClassName = @"ZSWTappableLabel";
     } else {
         self.placeholderLeft.constant = completeInsets.left;
     }
-
+    
     self.placeholderTop.constant = completeInsets.top;
 }
 
@@ -359,7 +359,9 @@ static NSString *const ZSWTappableLabelClassName = @"ZSWTappableLabel";
 - (void)textViewDidChange_ZSW {
     ZSWSuffixState suffixState = self.suffixState;
     ZSWSuffixState visibleState = self.visibleSuffixState;
-
+    
+    self.text = self.text;
+    
     if (suffixState != visibleState) {
         [self setNeedsUpdateConstraints];
     } else if (suffixState & ZSWSuffixStateSuffix) {
@@ -466,6 +468,7 @@ static NSString *const ZSWTappableLabelClassName = @"ZSWTappableLabel";
 }
 
 - (void)setText:(NSString *)text {
+    text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     [super setText:text];
     [self setNeedsUpdateConstraints];
 }
